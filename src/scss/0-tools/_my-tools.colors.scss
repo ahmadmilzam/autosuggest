@@ -1,0 +1,96 @@
+$opacity: (
+  'light': 0.8, // opacity used with lighter colors
+  'dark': 0.4  // opacity used with darker colors
+) !default;
+@function transparency($color, $key: 'light') {
+  $alpha : map-get($opacity, $key);
+  @return rgba($color, $alpha);
+}
+
+// @function foreground-color($bgcolor, $color-dark, $color-light, $threshold: 30%) {
+//   @return if( lightness($bgcolor) >= $threshold, $color-dark, $color-light );
+// }
+
+$color-interval: 10% !default;
+@function color-level($color, $level: 0) {
+  $color-base: if($level < 0, black, white);
+  @return mix($color-base, $color, abs($level) * $color-interval);
+}
+
+$color-key: 'base' !default;
+
+$colors: (
+  'primary': (
+    'base' : #320E3B,
+    'light': color-level(#320E3B, 2),
+    'dark' : color-level(#320E3B, -2)
+  ),
+  'accent': (
+    'base' : #f6921e,
+    'light': color-level(#f6921e, 2),
+    'dark' : color-level(#f6921e, -2)
+  ),
+  'foreground': (
+    'base'  : #444444,
+    'invert': #FFFFFF
+  ),
+  'background': (
+    'base': #DDFBD8,
+    'light': color-level(#DDFBD8, 2),
+    'dark' : color-level(#DDFBD8, -2)
+  ),
+  'alert': (
+    'base' : #C0392B,
+    'light': color-level(#C0392B, 2),
+    'dark' : color-level(#C0392B, -2)
+  ),
+  'success': (
+    'base' : #27AE60,
+    'light': color-level(#27AE60, 2),
+    'dark' : color-level(#27AE60, -2)
+  ),
+  'info': (
+    'base' : #3498DB,
+    'light': color-level(#3498DB, 2),
+    'dark' : color-level(#3498DB, -2)
+  ),
+  'warning': (
+    'base' : #F0AD4E,
+    'light': color-level(#F0AD4E, 2),
+    'dark' : color-level(#F0AD4E, -2)
+  ),
+  'white': (
+    'base' : #FFFFFF,
+    'light': color-level(#FFFFFF, 2),
+    'dark' : color-level(#FFFFFF, -2)
+  ),
+  'black': (
+    'base' : #333333,
+    'light': color-level(#333333, 2),
+    'dark' : color-level(#333333, -2)
+  ),
+  'disabled': (
+    'base' : #999999,
+    'light': color-level(#999999, 2),
+    'dark' : color-level(#999999, -2)
+  )
+) !default;
+@function color(
+  $name: 'primary',
+  $variant: $color-key
+) {
+  $color: null;
+
+  // Get the color spectrum
+  $color-spectrum: map-get($colors, $name);
+
+  // Get the color variant
+  @if $color-spectrum{
+    $color: map-get($color-spectrum, $variant);
+    @return $color;
+  } @else{
+    @warn "Unknown `#{$variant}` in $colors.";
+    @return null;
+  }
+
+}

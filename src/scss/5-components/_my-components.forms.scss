@@ -1,0 +1,289 @@
+/* ==========================================================================
+   FORM ELEMENTS
+   ========================================================================== */
+
+
+// Here we set a variable assuming that default settings are not set
+// globally. If they have been previously been defined, the following variable
+// will be overriden and will be set to `true`.
+$imported-default-settings: false !default;
+
+@if ($imported-default-settings == false) {
+  @warn "Oops! Have you included a default settings file?"
+}
+
+$form-spacing-unit:                     rem-calc(halve($base-spacing-unit));
+$form-font-size:                        rem-calc($base-font-size) !default;
+$form-label-font-size:                  rem-calc(14) !default;
+$form-label-font-weight:                600 !default;
+$form-input-height:                     36px;
+$form-input-bg:                         color('white');
+$form-border-style:                     solid !default;
+$form-border-width:                     rem-calc(1px) !default;
+$form-border-color:                     color('white', 'dark') !default;
+$form-border-color-hover:               color-level($form-border-color, -2) !default;
+$form-input-padding:                    halve($form-spacing-unit) !default;
+$form-input-margin-bottom:              halve($form-spacing-unit) !default;
+$form-label-margin-bottom:              quarter($form-spacing-unit) !default;
+
+
+fieldset {
+  padding: $base-spacing-unit;
+}
+
+// input,
+// label,
+// select {
+//   display: block;
+// }
+
+input[type="checkbox"],
+input[type="radio"] {
+  position: relative;
+  top: 2px;
+}
+
+input[type="file"] {
+  margin-bottom: halve($form-spacing-unit);
+  padding-bottom: halve($form-spacing-unit);
+  width: 100%;
+}
+
+.label {
+  font-size: $form-label-font-size;
+  font-weight: $form-label-font-weight;
+  margin-bottom: rem-calc($form-label-margin-bottom);
+  display: block;
+
+  .input-error &{
+    color: color('alert');
+  }
+  .input-success &{
+    color: color('success');
+  }
+  abbr{
+    display: none;
+  }
+
+  &.label--inline{
+    display: inline-block;
+  }
+}
+.label--required:after {
+  content: "*";
+  color: color('alert');
+}
+
+.input{
+  padding: $form-spacing-unit/2 $form-spacing-unit;
+  height: rem-calc($form-input-height);
+  background-color: $form-input-bg;
+  border-width: $form-border-width;
+  border-style: $form-border-style;
+  border-color: $form-border-color;
+  border-radius: $btn-radius;
+
+  &:hover,
+  &:focus{
+    border-color: $form-border-color-hover;
+  }
+  &:focus{
+    outline: none;
+  }
+
+  .input-error &{
+    border-color: color('alert');
+  }
+
+  .input-success &{
+    border-color: color('success');
+  }
+
+  @include box-sizing;
+  @include transition(border-color);
+
+  &.input--outline{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: none;
+  }
+  &.input--full{
+    width: 100%;
+  }
+  &.input--textarea{
+    resize: vertical;
+    height: $form-spacing-unit * 8;
+  }
+}
+
+
+// FIELD GROUP
+.field-row{
+  position: relative;
+  // margin-bottom: $form-input-margin-bottom;
+}
+
+  .field-row__msg{
+    display: block;
+    color: color('disabled');
+    font-size: rem-calc(12);
+    font-style: italic;
+
+    .input-error &{
+      color: color('alert');
+    }
+    .input-success &{
+      color: color('success');
+    }
+  }
+
+.field-row--horizontal{
+  @extend %clearfix;
+
+  @media #{$medium-up}{
+    .label{
+      float: left;
+      line-height: rem-calc($form-input-height);
+      padding-right: rem-calc(halve($base-spacing-unit));
+      text-align: right;
+    }
+    .input{
+      float: right;
+    }
+  }
+}
+
+// INPUT GROUP
+.input-group{
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+}
+  .input-group__item{
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .input-group__item--fill{
+    width: 100%;
+  }
+
+.input-group__input,
+.input-group__prefix,
+.input-group__postfix{
+  padding: $form-spacing-unit/2 $form-spacing-unit;
+  height: rem-calc($form-input-height);
+}
+
+.input-group__input{
+  width: 100%;
+}
+.input-group__input--right{
+  border-left-width: 0;
+}
+.input-group__input--left{
+  border-right-width: 0;
+}
+.input-group__input--both{
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
+.input-group__prefix,
+.input-group__postfix{
+
+  border-style: solid;
+  border-color: $form-border-color;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+
+  &.btn{
+    border-color: $btn-background;
+  }
+  &.btn--accent{
+    border-color: color('accent');
+  }
+}
+
+.input-group__prefix{
+  border-right-width: 0;
+}
+.input-group__postfix{
+  border-left-width: 0;
+}
+
+.input-search{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  .icon--search{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: rem-calc(20);
+
+    &:before{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .input{
+    padding-left: rem-calc(30);
+    width: 100%;
+  }
+}
+
+  // .group__suggestions{
+  //   position: absolute;
+  //   top: 100%;
+  //   left: 0;
+  //   width: 100%;
+  // }
+
+// Autocomplete style
+// .autocomplete-suggestions {
+//   border: 1px solid #999;
+//   background: #FFF;
+//   overflow: auto;
+//   box-shadow: 2px 2px 4px 0px rgba($color-black, 0.4);
+// }
+
+// .autocomplete-suggestion {
+//   padding: rem-calc(quarter($base-spacing-unit));
+//   white-space: nowrap;
+//   overflow: hidden; }
+
+// .autocomplete-selected {
+//   background: #F0F0F0; }
+
+// .autocomplete-suggestions strong {
+  // font-weight: normal;
+  // color: #3399FF; }
+
+// .autocomplete-group {
+//   padding: 2px 5px; }
+
+// .autocomplete-group strong {
+//   display: block;
+//   border-bottom: 1px solid #000; }
+
+// .autocomplete-no-suggestion{
+//   padding: rem-calc(quarter($base-spacing-unit));
+//   font-weight: 700;
+//   color: color('alert', 'light');
+// }
+
+// anti spam
+.input-important{
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+

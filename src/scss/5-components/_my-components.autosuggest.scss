@@ -1,0 +1,78 @@
+$input-height: 40px;
+
+.autosuggest {
+  position: relative;
+  display: block;
+}
+
+  .autosuggest__form {
+    position: relative;
+  }
+
+    .autosuggest__input {
+      display: block;
+      width: 100%;
+      height: rem-calc($input-height);
+      border: 1px solid color('primary');
+      line-height: rem-calc(halve($input-height));
+      padding: rem-calc(quarter($input-height));
+    }
+
+    .autosuggest__submit {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+
+      height: $input-height;
+      line-height: 1;
+
+      text-transform: uppercase;
+    }
+
+  .autosuggest__result {
+    display: none;
+
+    &.is-active {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 2;
+
+      display: block;
+      width: 100%;
+    }
+  }
+
+    .autosuggest__item {
+      border-top: 1px solid #EEE;
+
+      &:last-child {
+        border-bottom: 1px solid #EEE;
+      }
+    }
+
+      .autosuggest__link {
+        display: block;
+        padding: rem-calc(10);
+        background-color: color('white');
+
+
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          color: color('foreground');
+        }
+
+        .is-selected > & {
+          background-color: color-level(color('white'), -2);
+        }
+      }
+
+      .autosuggest__error {
+        display: block;
+        padding: rem-calc(10);
+        color: color('disabled');
+        background-color: color('white');
+      }

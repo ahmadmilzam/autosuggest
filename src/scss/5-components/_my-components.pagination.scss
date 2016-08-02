@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Pagination Build on top CSSKit
+   ========================================================================== */
+
+// Here we set a variable assuming that default and module settings
+// are not set globally. If they have been previously been defined,
+// the following variable will be overriden and will be set to `true`.
+$imported-default-settings: false !default;
+
+@if ($imported-default-settings == false) {
+  @warn "Oops! Have you included default settings and module settings files?"
+}
+
+
+// VARS
+$pagination-namespace:          $namespace !default;
+$pagination-border-color:       color('primary') !default;
+$pagination-border-thickness:   1px !default;
+$pagination-padding:            rem-calc(quarter($base-spacing-unit)) !default;
+$pagination-padding--large:     rem-calc(halve($base-spacing-unit)) !default;
+$pagination-radius:             $base-radius !default;
+$pagination-link-color:         $base-text-color !default;
+$pagination-bg-color:           transparent !default;
+$pagination-active-link-color:  color('white') !default;
+$pagination-active-bg:          color('primary') !default;
+
+.#{$pagination-namespace}pagination{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+  .#{$pagination-namespace}pagination__item{
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .#{$pagination-namespace}pagination__link{
+    display: block;
+    color: $pagination-link-color;
+    border: $pagination-border-thickness solid $pagination-border-color;
+    border-radius: $pagination-radius;
+    padding: $pagination-padding $pagination-padding*2;
+    background-color: $pagination-bg-color;
+
+    transition: background 0.2s ease-out,
+                color 0.2s ease-out;
+
+    &:hover,
+    &:active{
+      color: $pagination-active-link-color;
+      background-color: $pagination-active-bg;
+    }
+
+    &.is-disabled{
+      color: rgba($pagination-link-color, 0.4);
+      pointer-events: none;
+    }
+
+    &.is-current{
+      border-color: $pagination-active-bg;
+      color: $pagination-active-link-color;
+      background-color: $pagination-active-bg;
+    }
+
+    &.is-empty{
+      border-width: 0;
+    }
+
+
+  }
+
+/*
+Default markup
+<ul class="pagination">
+  <li class="pagination__item"><a href="" class="pagination__link is-button is-disabled">Prev</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-current">1</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">2</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">3</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-disabled is-empty">...</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">11</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">12</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">13</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">Next</a></li>
+</ul>
+*/
+
+/*
+   DIFFERENT VARIANT
+   ========================================================================== */
+
+// no spacing between link
+.#{$pagination-namespace}pagination--flush{
+  font-size: 0;
+
+  .#{$pagination-namespace}pagination__link{
+    font-size: rem-calc($base-font-size);
+    border-left-width: $pagination-border-thickness;
+    border-right-width: 0;
+    border-radius: 0;
+
+    &.is-empty{
+      border-top-width: $pagination-border-thickness;
+      border-bottom-width: $pagination-border-thickness;
+    }
+
+    &.is-button:first-of-type{
+      border-radius: $pagination-radius 0 0 $pagination-radius;
+    }
+
+    &.is-button:last-of-type{
+      border-right-width: $pagination-border-thickness !important;
+      border-radius: 0 $pagination-radius $pagination-radius 0;
+    }
+
+  }
+
+}
+/*
+Variant : Flush
+<ul class="pagination pagination--flush pagination--responsive">
+  <li class="pagination__item"><a href="" class="pagination__link is-button is-disabled">Prev</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-current">1</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">2</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">3</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-disabled is-empty">...</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">11</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">12</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">13</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-button">Next</a></li>
+</ul>
+*/
+
+
+// Seperate Pagination: move next and prev button to the opposite side
+.#{$pagination-namespace}pagination--seperate{
+  @extend %clearfix;
+  text-align: center;
+
+  > .#{$pagination-namespace}pagination__item:first-of-type{
+    float: left;
+  }
+
+  > .#{$pagination-namespace}pagination__item:last-of-type{
+    float: right;
+  }
+}
+/*
+Variant: Seperate
+<ul class="pagination pagination--seperate pagination--responsive">
+  <li class="pagination__item"><a href="" class="pagination__link is-button is-disabled">Prev</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-current">1</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">2</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">3</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-disabled is-empty">...</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">11</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">12</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">13</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-button">Next</a></li>
+</ul>
+*/
+
+
+// pagination large, larger padding for the pagination link
+.#{$pagination-namespace}pagination--large .#{$pagination-namespace}pagination__link{
+  font-size: rem-calc($base-font-size * 1.125);
+  padding: $pagination-padding--large;
+}
+/*
+Variant: Large
+<ul class="pagination pagination--large">
+  <li class="pagination__item"><a href="" class="pagination__link is-button is-disabled">Prev</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-current">1</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">2</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">3</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-disabled is-empty">...</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">11</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">12</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">13</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-button">Next</a></li>
+</ul>
+*/
+
+
+// Only show pagination button (prev, next, first, last) in small viewport
+@media screen and (max-width: 720px){
+  .#{$pagination-namespace}pagination--responsive .#{$pagination-namespace}pagination__link:not(.is-button){
+    display: none;
+  }
+}
+/*
+Variant: Responsive
+<ul class="pagination pagination--responsive">
+  <li class="pagination__item"><a href="" class="pagination__link is-button is-disabled">Prev</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-current">1</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">2</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">3</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-disabled is-empty">...</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">11</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">12</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link">13</a></li>
+  <li class="pagination__item"><a href="" class="pagination__link is-button">Next</a></li>
+</ul>
+*/

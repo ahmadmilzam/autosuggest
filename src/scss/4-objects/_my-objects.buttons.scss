@@ -1,0 +1,6 @@
+.btn--light{
+  @include buttons-style(color('accent'), color('white'));
+}
+.btn--dark{
+  @include buttons-style(color('black'));
+}

@@ -1,0 +1,15 @@
+.icon{
+  display: inline-block;
+}
+.icon--larger{
+  font-size: rem-calc($base-spacing-unit * 1.25);
+}
+.icon--double{
+  font-size: rem-calc($base-spacing-unit * 2);
+}
+.icon--triple{
+  font-size: rem-calc($base-spacing-unit * 3);
+}
+.icon--quadruple{
+  font-size: rem-calc($base-spacing-unit * 4);
+}
